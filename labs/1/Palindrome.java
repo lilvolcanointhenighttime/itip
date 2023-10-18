@@ -1,10 +1,11 @@
 public class Palindrome {
     public static void main(String[] args) {
-        System.out.println(isPalindrome("racecar"));
+        for (String arg : args) {
+            System.out.println(arg + " is a palindrome: " + isPalindrome(arg));
+        }
     }
 
     public static String reverseString(String str) {
-
         str = str.toLowerCase();
 
         StringBuilder reversed = new StringBuilder();

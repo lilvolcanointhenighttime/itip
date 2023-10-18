@@ -45,14 +45,13 @@ public class Main {
 
         // 10
         System.out.println("Task 10");
-        int n = 3; // Задайте значение n (количество массивов и их длину)
         int[][] arrays = {
             {1, 2, 3},
             {4, 5, 6},
             {7, 8, 9}
         };
 
-        dataScience(arrays, n);
+        dataScience(arrays);
 
         // Выводим измененные массивы
         for (int[] arr : arrays) {
@@ -248,36 +247,23 @@ public class Main {
     }
 
     // 10
-    public static void dataScience(int[][] arrays, int n) {
-        if (arrays.length == 0 || arrays[0].length == 0) {
-            return; // Некорректные входные данные
-        }
-
-        int numRows = arrays.length;
-        int numCols = arrays[0].length;
-
-        // Перебираем столбцы (n-ые элементы) и вычисляем среднее арифметическое элементов
-        for (int n = 0; n < numCols; n++) {
-            double sum = 0;
-            int count = 0;
-
-            for (int i = 0; i < numRows; i++) {
-                if (n < arrays[i].length) { // Проверяем, что в текущем массиве есть столбец n
-                    sum += arrays[i][n];
-                    count++;
-                }
+    public static void dataScience(int[][] matrix) {
+        int n = matrix.length;
+        for (int j = 0; j < matrix[0].length; j++) {
+            int sum = 0;
+            int average = 0;
+            for (int i = 0; i < n; i++) {
+                sum += matrix[i][j];
+                average = sum / n;
             }
-
-            if (count > 0) {
-                double average = sum / count;
-
-                // Изменяем n-ый элемент n-ого массива на среднее арифметическое
-                for (int i = 0; i < numRows; i++) {
-                    if (n < arrays[i].length) {
-                        arrays[i][n] = (int) average;
-                    }
-                }
-            }
+            matrix[j][j] = average;
         }
     }
 }
+// Этот код создает функцию dataScience, которая изменяет элементы последнего (n-го) массива в матрице на среднее арифметическое элементов в соответствующем столбце.
+
+
+
+
+
+
