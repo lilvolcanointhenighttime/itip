@@ -8,11 +8,11 @@ public class Main {
 
         // 2
         System.out.println("Task 2");
-        System.out.println(stringTransform("hello"));
+        System.out.println(stringTransform("hhellooo"));
 
         // 3
         System.out.println("Task 3");
-        System.out.println(doesBlockFit(1, 3, 5, 4, 5));
+        System.out.println(doesBlockFit(1, 2, 2, 1, 1));
 
         // 4
         System.out.println("Task 4");
@@ -73,38 +73,48 @@ public class Main {
                 result.setCharAt(i, '*'); // Fix this line
             }
         }
-    
         return result.toString(); // Use toString() to convert StringBuilder to String
     }
     
-
     // 2
     public static String stringTransform(String input) {
         StringBuilder result = new StringBuilder();
+        char[] chars = input.toCharArray();
 
-        for (int i = 1; i < input.length(); i++) {
-            char currentChar = input.charAt(i);
-            char prevChar = input.charAt(i - 1);
-
-            if (currentChar == prevChar) {
-                result.append("Double").append(currentChar);
+        for (int i = 0; i < input.length(); i++) {
+            String double_founded = "Double" + String.valueOf(chars[i]).toUpperCase();
+            if ( i < chars.length - 1 && chars[i] == chars[i + 1]) {
+                result.append(double_founded);
+                i++;
             } else {
-                result.append(currentChar);
+                result.append(chars[i]);
             }
         }
-
-        result.insert(0, input.charAt(0));
-
         return result.toString();
     }
 
-    // 3
+    // 3    container (2?)
     public static boolean doesBlockFit(int a, int b, int c, int w, int h) {
-        boolean fitsInWidth = a <= w && b <= h;
-        boolean fitsInHeight = a <= h && b <= w;
-        boolean fitsInDepth = b <= w && c <= h;
-
-        return fitsInWidth || fitsInHeight || fitsInDepth;
+        Integer[]  hole_sides = {w, h};
+        Integer[] sides = {a, b, c};
+        Arrays.sort(sides, Collections.reverseOrder());
+        Arrays.sort(hole_sides, Collections.reverseOrder());
+        // Boolean first_side_bool = sides[0] <= hole_sides[0];
+        // Boolean second_side_bool = sides[1] <= hole_sides[1];
+        // Boolean third_side_bool = sides[2] <= hole_sides[0] || sides[2] <= hole_sides[1];
+        // if (third_side_bool) {
+        //     return (first_side_bool && third_side_bool) || (second_side_bool && third_side_bool);
+        // }
+        return (sides[2] <= hole_sides[1]) && (sides[1] <= hole_sides[0]);
+        // if ((Arrays.binarySearch(sides, w) == 0) && (Arrays.binarySearch(sides, h) == 1)) {
+        //     return true;
+        // }
+        // if ((Arrays.binarySearch(sides, h) == 0) && (Arrays.binarySearch(sides, w) == 1)) {
+        //     return true;
+        // }
+        // System.out.println(Arrays.binarySearch(sides, w));
+        // System.out.println(Arrays.binarySearch(sides, h));
+        // return ((Arrays.binarySearch(sides, w) == 0) && (Arrays.binarySearch(sides, h) == 1)) || ((Arrays.binarySearch(sides, h) == 0) && (Arrays.binarySearch(sides, w) == 1));
     }
 
     // 4
@@ -117,11 +127,12 @@ public class Main {
             sumOfSquares += digit * digit;
             tempNumber /= 10;
         }
-
-        return (number % 2 == 0 && sumOfSquares % 2 == 0) || (number % 2 != 0 && sumOfSquares % 2 != 0);
+        boolean number_parity = (number % 2 == 0);
+        boolean sumOfSquares_parity = (sumOfSquares % 2 == 0);
+        return number_parity && sumOfSquares_parity;
     }
 
-    // 5
+    // 5 ?????
     public static int countRoots(int[] coefficients) {
         if (coefficients.length != 3) {
             throw new IllegalArgumentException("Array must contains only 3 elements");
@@ -132,12 +143,21 @@ public class Main {
         int c = coefficients[2];
 
         int discriminant = b * b - 4 * a * c;
+        
+        // if ((b*(-1) - discriminant**0.5 /2*a) instanceof int) {}
+        double x1 = (b*(-1) - Math.sqrt(discriminant));
+        double x2 = (b*(-1) + Math.sqrt(discriminant));
 
-        if (discriminant > 0) {
+        boolean x1_bool = x1 % 1 == 0;
+        boolean x2_bool = x2 % 1 == 0;
+
+        if (x1_bool && x2_bool) {
             return 2;
-        } else if (discriminant == 0) {
+        }
+        if (x1_bool || x2_bool) {
             return 1;
-        } else {
+        }
+        else {
             return 0;
         }
     }
@@ -164,8 +184,6 @@ public class Main {
                 commonItems.retainAll(items);
             }
         }
-
-        // Преобразуем результат в список
         return new ArrayList<>(commonItems);
     }
 
@@ -217,18 +235,14 @@ public class Main {
 
     // 9
     public static String commonVowel(String sentence) {
-        // Приводим предложение к нижнему регистру, чтобы учесть все варианты
         sentence = sentence.toLowerCase();
 
-        // Создаем строку, содержащую гласные
         String vowels = "aeiouy";
 
-        // Создаем массив для подсчета частоты гласных
-        int[] counts = new int[6]; // "aeiou" - 5 гласных
+        int[] counts = new int[6];
 
-        // Перебираем символы предложения
         for (char c : sentence.toCharArray()) {
-            if (vowels.indexOf(c) != -1) {
+            if (vowels.indexOf(c) != -1) { // indexOf ???
                 // Если символ является гласной, увеличиваем соответствующий счетчик
                 counts[vowels.indexOf(c)]++;
             }
@@ -242,12 +256,11 @@ public class Main {
             }
         }
 
-        // Возвращаем гласную с максимальной частотой
         return String.valueOf(vowels.charAt(maxCountIndex));
     }
 
-    // 10
-    public static void dataScience(int[][] matrix) {
+    // 10   return int[][]
+    public static int[][] dataScience(int[][] matrix) {
         int n = matrix.length;
         for (int j = 0; j < matrix[0].length; j++) {
             int sum = 0;
@@ -258,10 +271,9 @@ public class Main {
             }
             matrix[j][j] = average;
         }
+        return matrix;
     }
 }
-// Этот код создает функцию dataScience, которая изменяет элементы последнего (n-го) массива в матрице на среднее арифметическое элементов в соответствующем столбце.
-
 
 
 
