@@ -99,22 +99,7 @@ public class Main {
         Integer[] sides = {a, b, c};
         Arrays.sort(sides, Collections.reverseOrder());
         Arrays.sort(hole_sides, Collections.reverseOrder());
-        // Boolean first_side_bool = sides[0] <= hole_sides[0];
-        // Boolean second_side_bool = sides[1] <= hole_sides[1];
-        // Boolean third_side_bool = sides[2] <= hole_sides[0] || sides[2] <= hole_sides[1];
-        // if (third_side_bool) {
-        //     return (first_side_bool && third_side_bool) || (second_side_bool && third_side_bool);
-        // }
         return (sides[2] <= hole_sides[1]) && (sides[1] <= hole_sides[0]);
-        // if ((Arrays.binarySearch(sides, w) == 0) && (Arrays.binarySearch(sides, h) == 1)) {
-        //     return true;
-        // }
-        // if ((Arrays.binarySearch(sides, h) == 0) && (Arrays.binarySearch(sides, w) == 1)) {
-        //     return true;
-        // }
-        // System.out.println(Arrays.binarySearch(sides, w));
-        // System.out.println(Arrays.binarySearch(sides, h));
-        // return ((Arrays.binarySearch(sides, w) == 0) && (Arrays.binarySearch(sides, h) == 1)) || ((Arrays.binarySearch(sides, h) == 0) && (Arrays.binarySearch(sides, w) == 1));
     }
 
     // 4
@@ -132,7 +117,7 @@ public class Main {
         return number_parity && sumOfSquares_parity;
     }
 
-    // 5 ?????
+    // 5
     public static int countRoots(int[] coefficients) {
         if (coefficients.length != 3) {
             throw new IllegalArgumentException("Array must contains only 3 elements");
@@ -144,7 +129,6 @@ public class Main {
 
         int discriminant = b * b - 4 * a * c;
         
-        // if ((b*(-1) - discriminant**0.5 /2*a) instanceof int) {}
         double x1 = (b*(-1) - Math.sqrt(discriminant));
         double x2 = (b*(-1) + Math.sqrt(discriminant));
 
