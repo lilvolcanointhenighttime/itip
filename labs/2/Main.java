@@ -1,6 +1,16 @@
 public class Main {
     public static void main(String[] args) {
+        PassengerCar car1 = new PassengerCar("Toyota", 2023, 25000, 4);
+        System.out.println(car1.getPrice());
+        car1.start();
+        car1.stop();
+        Transport car2 = new PassengerCar("Honda", 2022, 22000, 5);
+        Transport car3 = new PassengerCar();
+        car3.setModel("emptyModel");
+        System.out.println("Car3 model is: " + car3.getModel());
+        Transport truck1 = new Truck("Volvo", 2021, 75000, 20.5);
         
+        System.out.println("Total objects created: " + Transport.getCount());
     }
 }
 
@@ -9,12 +19,22 @@ abstract class Transport {
     private String model;
     private int year;
     private double price;
+    private static int counter;
+
+    // Конструктор по умолчанию
+    public Transport() {
+        this.model = "Transport";
+        this.year = 2023;
+        this.price = 0.00;
+        incrementCount();
+    }
 
     // Конструктор
     public Transport(String model, int year, double price) {
         this.model = model;
         this.year = year;
         this.price = price;
+        incrementCount();
     }
 
     // Методы
@@ -22,7 +42,16 @@ abstract class Transport {
 
     public abstract void stop();  // Метод для остановки транспортного средства
 
+    private static void incrementCount() {
+        counter++;
+    }
+
     // Геттеры и сеттеры
+
+    public static int getCount() {
+        return counter;
+    }
+
     public String getModel() {
         return model;
     }
@@ -60,10 +89,20 @@ class PassengerCar extends Transport {
     // Дополнительные поля для легкового автомобиля
     private int passengerCapacity;
 
+    // Конструктор по умолчанию
+    public PassengerCar() {
+        super("model", 2004, 5.00);
+        // String model = "PassengerCar";
+        // int year = 2023;
+        // double price = 0.00;
+        this.passengerCapacity = 0;
+        System.out.println("PassengerCar with passengerCapacity = " + this.passengerCapacity + " created");
+    }
     // Конструктор
     public PassengerCar(String model, int year, double price, int passengerCapacity) {
         super(model, year, price);
         this.passengerCapacity = passengerCapacity;
+        System.out.println("PassengerCar with passengerCapacity = " + this.passengerCapacity + " created");
     }
 
     // Перегрузка метода start() для легкового автомобиля
@@ -99,10 +138,16 @@ class Truck extends Transport {
     // Дополнительные поля для грузового автомобиля
     private double cargoCapacity;
 
+    public Truck() {
+        this.cargoCapacity = 0.00;
+        System.out.println("Truck with cargoCapacity = " + this.cargoCapacity + " created");
+    }
+
     // Конструктор
     public Truck(String model, int year, double price, double cargoCapacity) {
         super(model, year, price);
         this.cargoCapacity = cargoCapacity;
+        System.out.println("Truck with cargoCapacity = " + this.cargoCapacity + " created");
     }
 
     // Перегрузка метода start() для грузового автомобиля
@@ -138,10 +183,16 @@ class Motorcycle extends Transport {
     // Дополнительные поля для мотоцикла
     private String type;
 
+    public Motorcycle() {
+        this.type = "Motorcycle";
+        System.out.println("Motorcycle with type = " + this.type + " created");
+    }
+
     // Конструктор
     public Motorcycle(String model, int year, double price, String type) {
         super(model, year, price);
         this.type = type;
+        System.out.println("Motorcycle with type = " + this.type + " created");
     }
 
     // Перегрузка метода start() для мотоцикла
